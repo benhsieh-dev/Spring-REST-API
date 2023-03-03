@@ -1,4 +1,4 @@
-package com.devtiro.books.services.impl;
+package com.devtiro.books.services;
 
 import com.devtiro.books.domain.Book;
 import com.devtiro.books.domain.BookEntity;
@@ -18,6 +18,14 @@ public class BookServiceImpl implements BookService {
     @Autowired
     public BookServiceImpl(final BookRepository bookRepository) {
         this.bookRepository  = bookRepository;
+    }
+
+
+    @Override
+    public Book create(final Book book) {
+        final BookEntity bookEntity = bookToBookEntity(book);
+        final BookEntity savedBookEntity = bookRepository.save(bookEntity);
+        return bookEntityToBook(savedBookEntity);
     }
 
     @Override
