@@ -40,10 +40,6 @@ public class BookServiceImpl implements BookService {
         return bookEntityToBook(savedBookEntity);
     }
 
-    @Override
-    public Optional<Book> findById(String isbn) {
-        return Optional.empty();
-    }
 
     @Override
     public List<Book> listBooks() {
@@ -69,6 +65,12 @@ public class BookServiceImpl implements BookService {
                 .title(bookEntity.getTitle())
                 .author(bookEntity.getAuthor())
                 .build();
+    }
+
+    @Override
+    public Optional<Book> findById(String isbn) {
+        final Optional<BookEntity> foundBook = bookRepository.findById((isbn));
+        return foundBook.map(book -> bookEntityToBook(book));
     }
 
 }

@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static com.devtiro.books.TestData.testBook;
 import static com.devtiro.books.TestData.testBookEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,5 +36,15 @@ public class BookServiceImplTest {
         when(bookRepository.save(eq(bookEntity))).thenReturn(bookEntity);
         final Book result = underTest.create(book);
         assertEquals(book, result);
+    }
+
+    @Test
+    public void testThatFindByIdReturnsEmptyWhenNoBook() {
+        final String isbn = "123123123";
+
+        when(bookRepository.findById(eq(isbn))).thenReturn(Optional.empty());
+
+        final Optional<Book> result = underTest.findById(isbn);
+        assertEquals(Optional.empty(), result);
     }
 }
